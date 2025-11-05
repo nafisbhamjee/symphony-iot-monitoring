@@ -1,0 +1,9 @@
+pycache/
+*.pyc
+*.log
+*.swp
+.env
+*.DS_Store
+.idea/
+.vscode/
+*.local
