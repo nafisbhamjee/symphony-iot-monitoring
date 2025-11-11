@@ -1,6 +1,6 @@
 # Symphony IoT Monitoring and Analysis Stack
 
-## 🚀 Overview
+## Overview
 This repository demonstrates an end-to-end IoT monitoring pipeline deployed with **Eclipse Symphony** on Kubernetes.  
 It includes:
 - **Prometheus** for metrics collection and monitoring  
@@ -11,7 +11,7 @@ The goal is to simulate IoT devices, collect their metrics, and prepare the data
 
 ---
 
-## 🧩 Architecture
+## Architecture
 
 ```text
         ┌─────────────┐
@@ -55,7 +55,7 @@ symphony-iot-monitoring/
     ├── architecture-diagram.png
     ├── demo-script.md
 
-🧰 Setup (Minikube / Symphony)
+Setup (Minikube / Symphony)
 minikube start
 
 # Prometheus
@@ -76,12 +76,12 @@ Access Prometheus → http://localhost:9090
 
 Access Analysis Engine metrics → http://localhost:8086/metrics
 
-✅ Current Status
+Current Status
 Phase	Description	Result
 Prometheus Deployment	Symphony solution + service up	✔️
 IoT-Sim Integration	Metrics (iot_temperature_celsius) scraped	✔️
 Analysis Engine Integration	Connectivity verified, metrics pending	⚙️
-🧩 Next Steps
+Next Steps
 
 Finalize iot_predicted_temperature export in analysis-engine
 
