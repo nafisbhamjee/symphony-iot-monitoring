@@ -134,3 +134,7 @@ Analysis Engine Predictions → http://localhost:8086/metrics
 
 Guided by:
 Professor Mohamed El-Darielby
+
+📜 License
+
+MIT License © 2025 — IoT Monitoring & Analytics Team
