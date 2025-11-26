@@ -1,21 +1,17 @@
-📡 Symphony IoT Monitoring & Prediction System
+# Symphony IoT Monitoring and Analysis Stack
 
-Complete End-to-End Monitoring + Prediction Pipeline using Eclipse Symphony, Prometheus, Grafana, IoT Simulators, and a Python Analysis Engine.
+## 🚀 Overview
+This repository demonstrates an end-to-end IoT monitoring pipeline deployed with **Eclipse Symphony** on Kubernetes.  
+It includes:
+- **Prometheus** for metrics collection and monitoring  
+- **IoT-Sim** for generating random device telemetry  
+- **Analysis Engine** for querying Prometheus data and exposing predictions  
 
-🚀 Overview
+The goal is to simulate IoT devices, collect their metrics, and prepare the data for analytics or visualization.
 
-This repository implements a cloud-native IoT monitoring and prediction system deployed using Eclipse Symphony on Kubernetes.
-The system provides:
-	•	Real-time IoT telemetry from simulated devices
-	•	Centralized metric scraping via a custom Prometheus deployment
-	•	Predictive analytics (moving-average temperature prediction) via a Python microservice
-	•	Live dashboards using Grafana
-	•	Automated orchestration & reconciliation managed entirely by Eclipse Symphony
-	•	Reset scripts for reproducible deployments
+---
 
-The design demonstrates how Symphony can orchestrate a multi-service, container-based monitoring stack end-to-end.
-
-## 🧩 Architecture
+## Architecture
 
             ┌───────────────────┐
             │   IoT Simulators  │
@@ -84,19 +80,11 @@ symphony-iot-monitoring/
 │   ├── solution.yaml
 │   ├── solutioncontainer.yaml
 │   ├── instance.yaml
-│   ├── dashboard.json
-│
-├── reset-all.sh
-├── reset-prometheus.sh
-├── reset-iot.sh
-├── reset-analysis.sh
-├── reset-grafana.sh
-│
-└── README.md (you are here)
+└── docs/
+    ├── architecture-diagram.png
+    ├── demo-script.md
 
-🛠️ Deployment Instructions
-
-1️⃣ Start Minikube
+🧰 Setup (Minikube / Symphony)
 minikube start
 
 2️⃣ Deploy IoT Simulators
@@ -131,58 +119,28 @@ Access Prometheus → http://localhost:9090
 
 Access Analysis Engine metrics → http://localhost:8086/metrics
 
-## 🔄 Reset Scripts
+✅ Current Status
+Phase	Description	Result
+Prometheus Deployment	Symphony solution + service up	✔️
+IoT-Sim Integration	Metrics (iot_temperature_celsius) scraped	✔️
+Analysis Engine Integration	Connectivity verified, metrics pending	⚙️
+🧩 Next Steps
 
-To simplify development and ensure reproducible states, the project includes automated reset scripts for each component as well as a global reset.
+Finalize iot_predicted_temperature export in analysis-engine
 
-### **Available Reset Scripts**
+Integrate Grafana for visualization
 
-| Script Name                | Purpose |
-|---------------------------|---------|
-| `reset-iot.sh`            | Removes IoT-Sim solution, solutioncontainer, instance, and redeploys them cleanly. |
-| `reset-prometheus.sh`     | Resets the custom Prometheus deployment (solution, instance, config). |
-| `reset-analysis.sh`       | Resets the Analysis Engine Python microservice. |
-| `reset-grafana.sh`        | Resets Grafana solution, container, and instance. |
-| `reset-all.sh`            | Runs all individual reset scripts in sequence for a complete system refresh. |
+Automate deployment using Symphony pipelines
 
-### **Usage**
+👥 Contributors
 
-Run individual scripts:
+Nafis Bhamjee
+Oluwadamifola Ademoye
+Ankita Jayraj Patel
+Canchi Sathya 
+Devam Dharmendrabhai Shah
 
-```bash
-./reset-iot.sh
-./reset-prometheus.sh
-./reset-analysis.sh
-./reset-grafana.sh
-
-📊 Monitoring & Prediction Features
-
-## 📊 Monitoring & Prediction Features
-
-| Capability                    | Description |
-|------------------------------|-------------|
-| **IoT Telemetry Generation** | IoT simulators emit temperature, humidity, and battery metrics. |
-| **Centralized Scraping**     | Prometheus pulls metrics from all simulator pods and analysis engine. |
-| **Prediction Engine**        | Python-based service computes moving-average forecasts. |
-| **Metric Reinjection**       | Predicted values re-exposed on `/metrics` for Prometheus. |
-| **Full Visualization**       | Grafana dashboards show real-time and predicted values. |
-| **Automated Orchestration**  | Symphony deploys containers, self-heals failures, and manages replicas. |
-
-
-## 👥 Contributors
-
-We gratefully acknowledge the efforts of the team members who developed this IoT Monitoring & Prediction System:
-
-| Name                         | Role / Contribution |
-|------------------------------|----------------------|
-| **Nafis Bhamjee**            | Lead Developer, Architecture Design, Prometheus/Grafana Integration |
-| **Canchi Sathya**            | IoT Simulator Development, Testing |
-| **Ankita Jayraj Patel**      | Documentation, Research, Config Management |
-| **Oluwadamifola Ademoye**    | Pipeline Debugging, System Analysis |
-| **Devam Dharmendrabhai Shah**| Service Deployment, Testing & Validation |
-
-**Guided by:**  
-**Professor Mohamed El-Darieby**
+Guided by Professor Mohamed El-Darieby
 
 📝 License
 
