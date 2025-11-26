@@ -126,10 +126,10 @@ Analysis Engine Predictions → http://localhost:8086/metrics
 | Name                          | Contribution                                                 |
 | ----------------------------- | ------------------------------------------------------------ |
 | **Nafis Bhamjee**             | Lead Developer, Architecture, Prometheus/Grafana Integration |
-| **Canchi Sathya**             | IoT Simulator Development, Testing                           |
+| **Canchi Sathya**             | Testing, Validation                                          |
 | **Ankita Jayraj Patel**       | Documentation, Research, Configuration                       |
-| **Oluwadamifola Ademoye**     | Pipeline Debugging, System Analysis                          |
-| **Devam Dharmendrabhai Shah** | Deployment, Testing, Validation                              |
+| **Oluwadamifola Ademoye**     | IoT Simulator Development, Pipeline Debugging                |
+| **Devam Dharmendrabhai Shah** | Validation                                                   |
 
 
 Guided by:
