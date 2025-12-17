@@ -11,6 +11,8 @@ spec:
   components:
   - name: analysis-engine
     type: container
+    dependencies:
+      - sample-prometheus    
     properties:
       container.image: "analysis-engine:latest"
       container.imagePullPolicy: "IfNotPresent"

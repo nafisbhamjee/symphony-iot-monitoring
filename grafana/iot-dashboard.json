@@ -88,7 +88,7 @@
         },
         "targets": [
           {
-            "expr": "predicted_temperature_celsius",
+            "expr": "iot_predicted_temperature",
             "legendFormat": "Prediction",
             "interval": ""
           }
@@ -115,7 +115,7 @@
         },
         "targets": [
           {
-            "expr": "predicted_temperature_celsius",
+            "expr": "iot_predicted_temperature",
             "instant": true
           }
         ],

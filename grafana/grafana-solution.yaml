@@ -11,6 +11,8 @@ spec:
   components:
     - name: grafana
       type: container
+      dependencies:
+        - sample-prometheus
       properties:
         container.image: "grafana/grafana:10.0.0"
         container.imagePullPolicy: "IfNotPresent"
