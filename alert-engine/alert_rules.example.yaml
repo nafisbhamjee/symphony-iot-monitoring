@@ -1,0 +1,148 @@
+# Example Alert Rules Configuration
+# Copy this to alert_rules.yaml and customize
+
+prometheus:
+  url: "http://sample-prometheus:9090"
+  scrape_interval: 30
+
+email:
+  enabled: true
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  from_email: "alerts@yourcompany.com"
+  to_emails:
+    - "admin@yourcompany.com"
+    - "team@yourcompany.com"
+  username: "alerts@yourcompany.com"
+  password: "xxxx xxxx xxxx xxxx"  # 16-char Gmail app password
+
+alert_settings:
+  cooldown_minutes: 15
+  resolution_notification: true
+
+# === EXAMPLE ALERT RULES ===
+
+alert_rules:
+  # Temperature Alerts
+  - name: "critical_temperature"
+    description: "Temperature exceeded critical threshold"
+    metric: "iot_temperature_celsius"
+    condition: ">"
+    threshold: 35
+    duration: 120  # 2 minutes
+    severity: "critical"
+    email_subject: "🔥 CRITICAL: High Temperature Alert"
+    email_body: |
+      Temperature has exceeded 35°C for 2 minutes!
+      This requires immediate attention.
+  
+  - name: "warning_temperature"
+    description: "Temperature approaching critical levels"
+    metric: "iot_temperature_celsius"
+    condition: ">"
+    threshold: 32
+    duration: 300  # 5 minutes
+    severity: "warning"
+    email_subject: "⚠️ WARNING: Temperature Rising"
+    email_body: |
+      Temperature has been above 32°C for 5 minutes.
+      Monitor closely to prevent critical situation.
+  
+  - name: "low_temperature"
+    description: "Temperature too low"
+    metric: "iot_temperature_celsius"
+    condition: "<"
+    threshold: 18
+    duration: 180  # 3 minutes
+    severity: "warning"
+    email_subject: "❄️ WARNING: Low Temperature"
+    email_body: |
+      Temperature has dropped below 18°C for 3 minutes.
+      Check heating systems.
+
+  # Battery Alerts
+  - name: "critical_battery"
+    description: "Battery critically low"
+    metric: "iot_battery_percent"
+    condition: "<"
+    threshold: 10
+    duration: 60  # 1 minute
+    severity: "critical"
+    email_subject: "🔴 CRITICAL: Battery Almost Dead"
+    email_body: |
+      Battery level is below 10%!
+      Device will shut down soon. Replace/charge immediately.
+  
+  - name: "low_battery"
+    description: "Battery running low"
+    metric: "iot_battery_percent"
+    condition: "<"
+    threshold: 20
+    duration: 300  # 5 minutes
+    severity: "warning"
+    email_subject: "🔋 WARNING: Low Battery"
+    email_body: |
+      Battery level has dropped below 20% for 5 minutes.
+      Schedule maintenance to replace/recharge.
+
+  # Humidity Alerts
+  - name: "high_humidity"
+    description: "Humidity too high"
+    metric: "iot_humidity_percent"
+    condition: ">"
+    threshold: 80
+    duration: 180  # 3 minutes
+    severity: "warning"
+    email_subject: "💧 WARNING: High Humidity"
+    email_body: |
+      Humidity has exceeded 80% for 3 minutes.
+      Monitor for potential moisture damage.
+  
+  - name: "low_humidity"
+    description: "Humidity too low"
+    metric: "iot_humidity_percent"
+    condition: "<"
+    threshold: 30
+    duration: 300  # 5 minutes
+    severity: "info"
+    email_subject: "ℹ️ INFO: Low Humidity"
+    email_body: |
+      Humidity has been below 30% for 5 minutes.
+      Consider humidification if needed.
+
+  # Predicted Temperature Alerts (from Analysis Engine)
+  - name: "predicted_high_temperature"
+    description: "Predicted temperature will exceed threshold"
+    metric: "iot_predicted_temperature"
+    condition: ">"
+    threshold: 36
+    duration: 120  # 2 minutes
+    severity: "warning"
+    email_subject: "🔮 PREDICTION: Temperature Will Rise"
+    email_body: |
+      ML model predicts temperature will exceed 36°C.
+      Take preventive action now!
+
+# === CUSTOM RULES EXAMPLES ===
+
+# Rate of Change Alert (if you add derivative metrics)
+#  - name: "rapid_temperature_rise"
+#    description: "Temperature rising too quickly"
+#    metric: "iot_temperature_rate"
+#    condition: ">"
+#    threshold: 5  # 5 degrees per minute
+#    duration: 60
+#    severity: "critical"
+#    email_subject: "🚨 CRITICAL: Rapid Temperature Change"
+#    email_body: "Temperature is rising at an abnormal rate!"
+
+# Combined Condition (requires custom metric)
+#  - name: "hot_and_humid"
+#    description: "Dangerous combination of heat and humidity"
+#    metric: "heat_index"  # Custom calculated metric
+#    condition: ">"
+#    threshold: 40
+#    duration: 180
+#    severity: "critical"
+#    email_subject: "☀️ CRITICAL: Dangerous Heat Index"
+#    email_body: "Heat index indicates dangerous conditions!"
