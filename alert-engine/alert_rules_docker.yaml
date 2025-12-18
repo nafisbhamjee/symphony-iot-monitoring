@@ -1,0 +1,60 @@
+# Alert Engine Configuration - Docker Compose Version
+# This config uses 'prometheus' hostname for Docker Compose networking
+
+prometheus:
+  url: "http://prometheus:9090"
+  scrape_interval: 30  # Check metrics every 30 seconds
+
+email:
+  enabled: true  # Real Gmail alerts enabled!
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  from_email: "sathyacanchi@gmail.com"
+  to_emails:
+    - "sathyacanchi@gmail.com"  # You'll receive the alerts
+  username: "sathyacanchi@gmail.com"
+  password: "wgen oolv lgzb skur"  # Gmail app password
+
+alert_settings:
+  cooldown_minutes: 15  # Wait 15 minutes before re-sending same alert
+  resolution_notification: true  # Send "all clear" email when alert resolves
+
+alert_rules:
+  - name: "critical_temperature"
+    description: "Temperature exceeded safe threshold"
+    metric: "iot_temperature_celsius"
+    condition: ">"
+    threshold: 35
+    duration: 0  # Fire immediately when threshold is exceeded
+    severity: "critical"
+    email_subject: "🔥 CRITICAL: High Temperature Alert"
+    email_body: |
+      Temperature has exceeded 35°C!
+      
+      This requires immediate attention.
+    
+  - name: "low_battery"
+    description: "Device battery running low"
+    metric: "iot_battery_percent"
+    condition: "<"
+    threshold: 20
+    duration: 0  # Fire immediately when battery drops below 20%
+    severity: "warning"
+    email_subject: "🔋 WARNING: Low Battery Alert"
+    email_body: |
+      Battery level has dropped below 20%.
+      
+      Please check device power supply.
+    
+  - name: "high_humidity"
+    description: "Humidity too high"
+    metric: "iot_humidity_percent"
+    condition: ">"
+    threshold: 80
+    duration: 0  # Fire immediately when humidity exceeds 80%
+    severity: "warning"
+    email_subject: "💧 WARNING: High Humidity Alert"
+    email_body: |
+      Humidity has exceeded 80%.
+      
+      Monitor for potential moisture issues.

@@ -1,0 +1,9 @@
+apiVersion: solution.symphony/v1
+kind: Instance
+metadata:
+  name: alert-engine-instance
+spec:
+  scope: sample-k8s-scope
+  solution: alert-engine-v-1
+  target:
+    name: sample-k8s-target

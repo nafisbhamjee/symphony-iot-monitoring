@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+*.egg-info/
+
+# Sensitive files
+alert_rules.yaml.local
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
