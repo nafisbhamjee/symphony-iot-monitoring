@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'iot-sim'
+    static_configs:
+      - targets:
+          - 'iot-sim:8080'
+
+  - job_name: 'analysis-engine'
+    static_configs:
+      - targets:
+          - 'analysis-engine:8086'
+
+  - job_name: 'alert-engine'
+    static_configs:
+      - targets:
+          - 'alert-engine:8087'

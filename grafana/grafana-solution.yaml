@@ -1,0 +1,18 @@
+apiVersion: solution.symphony/v1
+kind: Solution
+metadata:
+  name: grafana-v-1
+spec:
+  rootResource: grafana
+  metadata:
+    deployment.replicas: "#1"
+    service.ports: "[{\"name\":\"http\",\"port\":3000}]"
+    service.type: "LoadBalancer"
+  components:
+    - name: grafana
+      type: container
+      properties:
+        container.image: "grafana/grafana:10.0.0"
+        container.imagePullPolicy: "IfNotPresent"
+        container.ports: "[{\"containerPort\":3000,\"protocol\":\"TCP\"}]"
+        container.resources: "{\"requests\":{\"cpu\":\"100m\",\"memory\":\"128Mi\"}}"

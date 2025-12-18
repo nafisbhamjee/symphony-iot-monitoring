@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  # IoT Simulator - Generates sensor metrics
+  iot-sim:
+    build: ./iot-sim
+    container_name: symphony-iot-sim
+    ports:
+      - "8080:8080"
+    networks:
+      - symphony-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/metrics"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # Prometheus - Collects and stores metrics
+  prometheus:
+    build: ./prometheus-deploy/custom-prometheus
+    container_name: symphony-prometheus
+    ports:
+      - "9090:9090"
+    networks:
+      - symphony-network
+    volumes:
+      - prometheus-data:/prometheus
+      - ./prometheus-deploy/custom-prometheus/prometheus-docker.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--tries=1", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      - iot-sim
+
+  # Alert Engine - Monitors metrics and sends Gmail alerts
+  alert-engine:
+    build: ./alert-engine
+    container_name: symphony-alert-engine
+    ports:
+      - "8087:8087"
+    networks:
+      - symphony-network
+    environment:
+      - PROMETHEUS_URL=http://prometheus:9090
+    volumes:
+      - ./alert-engine/alert_rules_docker.yaml:/app/alert_rules.yaml:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8087/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      - prometheus
+
+  # Analysis Engine - Prediction service (optional, for completeness)
+  analysis-engine:
+    build: ./analysis-engine
+    container_name: symphony-analysis-engine
+    ports:
+      - "8086:8086"
+    networks:
+      - symphony-network
+    restart: unless-stopped
+    depends_on:
+      - iot-sim
+
+networks:
+  symphony-network:
+    driver: bridge
+    name: symphony-network
+
+volumes:
+  prometheus-data:
+    name: symphony-prometheus-data

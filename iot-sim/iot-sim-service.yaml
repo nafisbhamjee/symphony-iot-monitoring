@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-prometheus-iot-sim
+  namespace: sample-k8s-scope
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8085"
+spec:
+  selector:
+    app: iot-sim-instance
+  ports:
+    - name: metrics
+      port: 8085
+      targetPort: 8085
+  type: ClusterIP

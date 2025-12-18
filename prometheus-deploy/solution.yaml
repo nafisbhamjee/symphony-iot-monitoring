@@ -1,0 +1,33 @@
+apiVersion: solution.symphony/v1
+kind: Solution
+metadata:
+  name: sample-prometheus-v-1
+spec:
+  displayName: "Custom Prometheus"
+  version: "v1"
+  rootResource: sample-prometheus
+
+  metadata:
+    deployment.replicas: "1"
+    service.type: "LoadBalancer"
+    service.ports: '[{"name":"http","port":9090}]'
+
+  components:
+    - name: sample-prometheus
+      type: container
+
+      properties:
+        container.image: "nafisbhamjee/custom-prometheus:latest"
+        container.imagePullPolicy: "Always"
+
+        # Port inside the container
+        container.ports: |
+          [
+            { "containerPort": 9090, "protocol": "TCP" }
+          ]
+
+        # Labels (optional but good practice)
+        pod.labels: |
+          {
+            "app": "sample-prometheus-instance"
+          }
